@@ -33,7 +33,7 @@ def region_of_interest(image):
 
 
 def main():
-    img = cv2.imread('./test.jpeg')
+    img = cv2.imread('./image/a_test.jpeg')
     lane_image = np.copy(img)
 
     can = canny(lane_image)
