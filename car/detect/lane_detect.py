@@ -1,9 +1,3 @@
-# !/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Time         : 2021/9/24 7:17 下午
-# @Author       : yanbingzheng@4paradigm.com
-# @File         : my.py
-# @Description  : xxxxx
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -12,24 +6,29 @@ import time
 
 def canny(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite('./gray.jpg', gray)
+    cv2.imwrite('./image/gray.jpg', gray)
 
     blur = cv2.GaussianBlur(gray, (17, 17), 0)
-    cv2.imwrite('./blur.jpg', blur)
+    cv2.imwrite('./image/blur.jpg', blur)
 
     ret, binary = cv2.threshold(blur, 180, 255, cv2.THRESH_BINARY)
-    cv2.imwrite('./binary.jpg', binary)
+    cv2.imwrite('./image/binary.jpg', binary)
 
     can = cv2.Canny(binary, 50, 150)
-    cv2.imwrite('./canny.jpg', can)
+    cv2.imwrite('./image/canny.jpg', can)
 
     plt.imshow(can)
     plt.show()
 
 
 def region_of_interest(image):
-    height = image.shape[0]
-    # triangle = np.array([0, he])
+    return image
+
+
+def hough_transform(image):
+    hough = cv2.HoughLinesP(image, 0.8, np.pi / 180, 100, minLineLength=100, maxLineGap=10)
+    cv2.imwrite('./image/hough.jpg', hough)
+    return hough
 
 
 def main():
@@ -37,6 +36,10 @@ def main():
     lane_image = np.copy(img)
 
     can = canny(lane_image)
+
+    roi = region_of_interest(can)
+
+    hough = hough_transform(roi)
 
     # plt.imshow(gray)
     # cv2.imshow('img', img)
