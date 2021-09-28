@@ -26,9 +26,17 @@ def region_of_interest(image):
 
 
 def hough_transform(image):
-    hough = cv2.HoughLinesP(image, 0.8, np.pi / 180, 100, minLineLength=100, maxLineGap=10)
-    cv2.imwrite('./image/hough.jpg', hough)
-    return hough
+    rho = 1
+    theta = np.pi / 180
+    threshold = 15
+    min_line_len = 40
+    max_line_gap = 20
+    lines = cv2.HoughLinesP(image, rho, theta, threshold, minLineLength=min_line_len, maxLineGap=max_line_gap)
+
+    print(f'lines: {lines}')
+
+    # cv2.imwrite('./image/hough.jpg', lines)
+    return lines
 
 
 def main():
@@ -41,12 +49,6 @@ def main():
 
     hough = hough_transform(roi)
 
-    # plt.imshow(gray)
-    # cv2.imshow('img', img)
-    # cv2.imshow('lane_image', lane_image)
-    # cv2.imshow('gray', gray)
-    # cv2.imshow('blur', blur)
-    # cv2.waitKey(20 * 1000)
 
 
 if __name__ == '__main__':
