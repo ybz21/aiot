@@ -1,0 +1,60 @@
+<html>
+<title>Car Control</title>
+
+<style>
+    div {
+        margin: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    button {
+        min-width: 200px;
+        height: 100px;
+        margin: 20px;
+        font-size: 40px;
+
+        user-select:none;
+        -webkit-touch-callout:none;
+        -webkit-user-select:none;
+        -khtml-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        -webkit-tap-highlight-color:rgba(0,0,0,0);
+    }
+    #f {
+
+    }
+    #b{
+
+    }
+
+</style>
+<script>
+    function httpGet(url) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", url, false); // false for synchronous request
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+    }
+</script>
+
+<body>
+<div> <h1 >AIoT Car</h1> </div>
+
+<div>
+    <button id="f" ontouchstart="httpGet('/forward')" ontouchend="httpGet('/stop')">forward</button>
+</div>
+<div>
+
+
+    <button id="l" ontouchstart="httpGet('/left')" ontouchend="httpGet('/stop')">left</button>
+    <button id="s" onclick="httpGet('/stop')">stop</button>
+    <button id="r" ontouchstart="httpGet('/right')" ontouchend="httpGet('/stop')">right</button>
+</div>
+<div>
+    <button id="b" ontouchstart="httpGet('/backward')" ontouchend="httpGet('/stop')">backward</button>
+</div>
+
+</body>
+</html>

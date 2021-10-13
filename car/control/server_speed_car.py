@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request,render_template
 import argparse
 from car_speed import SpeedCar
 
@@ -8,7 +8,6 @@ args = parser.parse_args()
 
 app = Flask(__name__)
 car = SpeedCar()
-
 
 def get_speed():
     speed = request.args.get('speed')
@@ -20,9 +19,13 @@ def get_speed():
     print(f'speed: {speed}')
     return speed
 
+@app.route('/')
+def index():
+    return  render_template('index.html')
 
 @app.route('/forward')
 def forward():
+    print('forward')
     speed = get_speed()
     car.forward(speed=speed)
     return 'ok'
