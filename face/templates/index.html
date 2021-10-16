@@ -1,0 +1,43 @@
+<html>
+<title>
+    人脸考勤系统
+</title>
+
+<script>
+</script>
+<style>
+    div {
+        margin: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    td{
+        padding: 20px;
+    }
+</style>
+
+<div>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>打卡时间</th>
+            <th>打卡照片</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry.name }}</td>
+            <td>{{ entry.time }}</td>
+            <td>
+                <a href="image?name={{ entry.image }}" target="_blank">图片详情</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+</html>
