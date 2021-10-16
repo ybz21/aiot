@@ -12,6 +12,9 @@ FACE_THRESHOLD = 0.44
 TIME_THRESHOLD = 30
 
 
+CAMERA_NO = 1
+
+
 def init_faces():
     faces_dir = os.path.join(current_path, 'face_models')
     files = os.listdir(faces_dir)
@@ -36,7 +39,7 @@ def detect(known_face_names, known_face_encodings, threshold=FACE_THRESHOLD):
     last_face_time = time.time()
     last_face_name = UN_KNOWN
 
-    video_capture = cv2.VideoCapture(0)
+    video_capture = cv2.VideoCapture(CAMERA_NO)
 
     # Initialize some variables
     face_locations = []
@@ -59,7 +62,9 @@ def detect(known_face_names, known_face_encodings, threshold=FACE_THRESHOLD):
             face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
             if len(face_encodings) != 1:
-                print('much more than 1 person')
+                local_time = time.strftime("%Y-%m-%d %H:%M:%S")
+                print(f'{local_time}, person num: {len(face_encodings)}, skip this situation!')
+                time.sleep(1)
                 continue
 
             # face_name = ''
@@ -80,7 +85,7 @@ def detect(known_face_names, known_face_encodings, threshold=FACE_THRESHOLD):
             if face_name != last_face_name or time_now - last_face_time > TIME_THRESHOLD:
                 face_names = [face_name]
                 pic_name = f'{time_now}_{face_name}.jpg'
-
+                print(f'detect person: {face_name}')
                 save_pic(frame, face_locations, face_names, pic_name)
                 write_csv(face_name, time_now, pic_name)
 
@@ -93,7 +98,7 @@ def detect(known_face_names, known_face_encodings, threshold=FACE_THRESHOLD):
 
 
 def save_pic(frame, face_locations, face_names, pic_name):
-    print('save pic')
+    print(f'save pic:{pic_name}')
     for (top, right, bottom, left), name in zip(face_locations, face_names):
         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
         top *= 4
