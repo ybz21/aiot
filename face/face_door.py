@@ -4,15 +4,18 @@ import numpy as np
 import os
 import time
 import csv
+import argparse
 
 current_path = os.path.dirname(os.path.abspath(__file__))
+
+parser = argparse.ArgumentParser(description='The args')
+parser.add_argument('-c', '--camera_no', default=1)
+args = parser.parse_args()
 
 UN_KNOWN = 'Unknown'
 FACE_THRESHOLD = 0.44
 TIME_THRESHOLD = 30
-
-
-CAMERA_NO = 1
+CAMERA_NO = args.camera_no
 
 
 def init_faces():

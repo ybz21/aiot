@@ -8,7 +8,7 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 
 
 def init_faces():
-    faces_dir = os.path.join(current_path, 'faces')
+    faces_dir = os.path.join(current_path, 'face_models')
     files = os.listdir(faces_dir)
 
     known_face_encodings = []
@@ -28,7 +28,7 @@ def init_faces():
 
 
 def detect(known_face_names, known_face_encodings, threshold=0.44):
-    video_capture = cv2.VideoCapture(0)
+    video_capture = cv2.VideoCapture(1)
 
     # Initialize some variables
     face_locations = []
