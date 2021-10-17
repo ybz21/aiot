@@ -1,0 +1,77 @@
+{
+  "name": "face-app",
+  "selector": "baetyl-node-name=ai-camera",
+  "labels": {
+    "app": "face-app"
+  },
+  "description": "this is a face container app",
+  "services": [
+    {
+      "name": "face-service",
+      "lables": {},
+      "image": "face:v1",
+      "hostname": "face-hostname",
+      "replica": 1,
+      "volumeMounts": [
+        {
+          "name": "model-volume",
+          "mountPath": "/root/code",
+          "readOnly": false,
+          "immutable": false
+        },
+        {
+          "name": "camera",
+          "mountPath": "/dev/video1"
+        }
+      ],
+      "ports": [
+        {
+          "hostPort": 8888,
+          "containerPort": 8888,
+          "hostIP": "0.0.0.0",
+          "protocol": "TCP"
+        }
+      ],
+      "devices": [],
+      "args": [
+        "/bin/bash",
+        "-c",
+        "sleep 9999"
+      ],
+      "env": [
+        {
+          "name": "role",
+          "value": "master"
+        }
+      ],
+      "resources": {
+        "limits": {
+          "cpu": "2",
+          "memory": "2048Mi"
+        },
+        "requests": {
+          "cpu": "500m",
+          "memory": "256Mi"
+        }
+      },
+      "security": {
+        "privileged": true
+      }
+    }
+  ],
+  "volumes": [
+    {
+      "name": "model-volume",
+      "config": {
+        "name": "face-model-config"
+      }
+    },
+    {
+      "name": "camera",
+      "hostPath": {
+        "path": "/dev/video1"
+      }
+    }
+  ],
+  "type": "container"
+}
