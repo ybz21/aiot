@@ -6,19 +6,27 @@ import time
 
 def canny(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite('./image/gray.jpg', gray)
+    cv2.imwrite('./result/gray.jpg', gray)
 
-    blur = cv2.GaussianBlur(gray, (17, 17), 0)
-    cv2.imwrite('./image/blur.jpg', blur)
-
-    ret, binary = cv2.threshold(blur, 180, 255, cv2.THRESH_BINARY)
-    cv2.imwrite('./image/binary.jpg', binary)
-
-    can = cv2.Canny(binary, 50, 150)
-    cv2.imwrite('./image/canny.jpg', can)
-
-    plt.imshow(can)
+    blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    cv2.imwrite('./result/blur.jpg', blur)
+    plt.imshow(blur)
     plt.show()
+
+    ret, binary1 = cv2.threshold(blur, 100, 255, cv2.cv2.THRESH_BINARY_INV)
+    cv2.imwrite('./result/binary1.jpg', binary1)
+    plt.imshow(binary1)
+
+    ret, binary2 = cv2.threshold(binary1, 100, 255, cv2.THRESH_BINARY)
+    cv2.imwrite('./result/binary2.jpg', binary2)
+    plt.imshow(binary2)
+    plt.show()
+
+    # can = cv2.Canny(binary, 50, 150)
+    # cv2.imwrite('./result/canny.jpg', can)
+
+    # plt.imshow(can)
+    # plt.show()
 
 
 def region_of_interest(image):
@@ -40,7 +48,7 @@ def hough_transform(image):
 
 
 def main():
-    img = cv2.imread('./image/a_test.jpeg')
+    img = cv2.imread('./image_real/bb.jpg')
     lane_image = np.copy(img)
 
     can = canny(lane_image)
