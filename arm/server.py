@@ -24,13 +24,13 @@ def index():
 def forward():
     print('start')
     global arm
-    arm.set_enable_auto_sort(True)
+    arm.set_enable_auto_drive(True)
     return 'ok'
 
 @app.route('/stop')
 def stop():
     global arm
-    arm.set_enable_auto_sort(False)
+    arm.set_enable_auto_drive(False)
     return 'ok'
 
 

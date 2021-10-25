@@ -5,6 +5,7 @@ import time
 import signal
 import atexit
 import os
+import threading
 
 atexit.register(GPIO.cleanup)
 GPIO.setwarnings(False)
@@ -16,15 +17,25 @@ p1 = GPIO.PWM(33, 50)  # 50HZ
 p2 = GPIO.PWM(32, 50)  # 50HZ
 
 
-class Arm:
-    def __init__(self):
+class Arm(threading.Thread):
+    def __init__(self,enable_auto_drive=False):
         os.system('sh ../init.sh')
-
-    def start(self):
+        threading.Thread.__init__(self)
         p1.start(0)
         p2.start(0)
         time.sleep(2)
-        while (True):
+
+    def run(self):
+        while True:
+            if self.enable_auto_drive:
+                self.start()
+            else:
+                #self.stop()
+                time.sleep(5)
+                print('---sleep ')
+
+    def start(self):
+        while self.enable_auto_drive:
             for i in range(0, 181, 10):
                 p2.ChangeDutyCycle(2.5 + 10 * i / 180)  # 设置转动角度
                 time.sleep(0.02)  # 等该20ms周期结束
@@ -66,3 +77,9 @@ class Arm:
     def stop(self):
         p1.ChangeDutyCycle(0)  # 归零信号
         p2.ChangeDutyCycle(0)
+
+
+    def set_enable_auto_drive(self, auto):
+        self.enable_auto_drive = auto
+        if not auto:
+            self.stop()
