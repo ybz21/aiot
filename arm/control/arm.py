@@ -4,6 +4,7 @@ import Jetson.GPIO as GPIO
 import time
 import signal
 import atexit
+import os
 
 atexit.register(GPIO.cleanup)
 GPIO.setwarnings(False)
@@ -49,7 +50,7 @@ class Arm:
                 p2.ChangeDutyCycle(0)
             time.sleep(1)
 
-             for j in range(0, 181, 10):
+            for j in range(0, 181, 10):
                 p1.ChangeDutyCycle(2.5 + 10 * j / 180)  # 设置转动角度
                 time.sleep(0.02)  # 等该20ms周期结束
                 p1.ChangeDutyCycle(0)  # 归零信号
