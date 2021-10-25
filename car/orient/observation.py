@@ -8,7 +8,7 @@
 obs_length = 5
 
 
-def generate_obs(distance, now_lane, threshold=20):
+def generate_obs(distance, now_lane, threshold=35):
     has_car = False
     if distance < threshold:
         has_car = True
@@ -16,14 +16,19 @@ def generate_obs(distance, now_lane, threshold=20):
     current_lane = [0] * obs_length
 
     if has_car:
-        current_lane[1] = 1
+        current_lane = [1] * obs_length
+        current_lane[0] = 0
 
     if now_lane == 'right':
         left_lane = [0] * obs_length
         right_lane = [1] * obs_length
+        if not has_car:
+            left_lane = [1] * obs_length
     else:
         left_lane = [1] * obs_length
         right_lane = [0] * obs_length
+        if not has_car:
+            right_lane = [1] * obs_length
 
     all_lanes = [
         left_lane,
@@ -42,10 +47,14 @@ def generate_obs(distance, now_lane, threshold=20):
 
 
 def test_generate_obs():
-    generate_obs(True, 'right')
+    generate_obs(10, 'right')
 
-    generate_obs(False, 'right')
+    generate_obs(100, 'right')
 
-    generate_obs(True, 'left')
+    generate_obs(10, 'left')
 
-    generate_obs(False, 'left')
+    generate_obs(100, 'left')
+
+
+if __name__ == '__main__':
+    test_generate_obs()

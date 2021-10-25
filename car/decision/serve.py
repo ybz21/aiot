@@ -7,7 +7,7 @@ import highway_env
 def serve():
     model = PPO.load("highway_ppo/model")
     env = gym.make("two-way-v0")
-    for _ in range(5):
+    for _ in range(100):
         obs = env.reset()
         done = False
         while not done:

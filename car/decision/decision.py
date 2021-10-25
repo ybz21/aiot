@@ -20,11 +20,11 @@ class Decision:
         # https://highway-env.readthedocs.io/en/latest/actions/index.html#discrete-meta-actions
         action = self.get_raw_action(obs)
         if action == 0:
-            return 'changeLeft',action
+            return 'changeLeft', action
         elif action == 2:
-            return 'changeRight',action
+            return 'changeRight', action
         else:
-            return 'forward',action
+            return 'forward', action
 
 
 def main():
